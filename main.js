@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             countdownSeconds.textContent = '00';
             
             countdownMessage.innerHTML = '🎉 <strong>YEAH AKHIRNYAA</strong> 🎉<br>sudah bisa dibuka!';
-            countdownMessage.style.color = '#fa14d7ff';
+            countdownMessage.style.color = '#f53acaff';
             countdownMessage.style.textShadow = '0 0 10px #ffd700';
             
             openBtn.disabled = false;
