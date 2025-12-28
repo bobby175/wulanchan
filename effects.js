@@ -159,10 +159,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 (function WhisperSync(){
     const whispers = [
-        { t: 6,  text: "Aku selalu di sini 🤍" },
-        { t: 14, text: "Pelan-pelan bacanya ya…" },
+        { t: 6,  text: "Ada sesuatu di sini 🤍" },
+        { t: 14, text: "Semoga wulan suka…" },
         { t: 22, text: "Semoga kamu ngerasa ditemani ✨" },
-        { t: 32, text: "Ini cuma buat kamu…" }
+        { t: 32, text: "Ini cuma buat wulan…" }
     ];
 
     const fired = {};
