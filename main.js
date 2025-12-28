@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             countdownMinutes.textContent = '00';
             countdownSeconds.textContent = '00';
             
-            countdownMessage.innerHTML = '🎉 <strong>YEAH AKHIRNYAA</strong> 🎉<br>Tombol sudah bisa dibuka!';
+            countdownMessage.innerHTML = '🎉 <strong>YEAH AKHIRNYAA</strong> 🎉<br>sudah bisa dibuka!';
             countdownMessage.style.color = '#fa14d7ff';
             countdownMessage.style.textShadow = '0 0 10px #ffd700';
             
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function showNoDownloadMessage() {
         const message = document.createElement('div');
-        message.innerHTML = '❌ Foto tidak bisa didownload!';
+        message.innerHTML = '❌ Hayoo mau ngapain?!!';
         message.style.position = 'fixed';
         message.style.top = '50%';
         message.style.left = '50%';
