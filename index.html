@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    
+    <meta property="og:title" content="Tolong di buka yaaa">
+    <meta property="og:description" content="Ada sesuatu yang spesial buat kamu ✨">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://DOMAIN-KAMU">
+    <meta property="og:image" content="https://bit.ly/4qwHHCn">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:type" content="image/jpeg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tolong di buka yaaa ">
+    <meta name="twitter:description" content="Ada sesuatu yang spesial buat kamu ✨">
+    <meta name="twitter:image" content="https://bit.ly/4qwHHCn">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otanjoubi Omedetou Wulan Ayu D.W.</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    
+    <audio id="bgm" src="https://bit.ly/4pyMi6i" loop></audio>
+
+    
+    <div id="startScreen" aria-modal="true" role="dialog">
+        <h2>
+          🎀
+          <span class="dancing-text">Ada</span>
+          Sesuatu
+          <span class="dancing-text">Untuk</span>
+        <span class="dancing-text">Wulan</span> 
+        🎀</h2>
+        
+        
+        <div id="birthdayCountdown">
+            <div class="countdown-title">⏳ Hitung Mundur Ulang Tahun Wulan 🎂</div>
+            <div class="countdown-display">
+                <div class="countdown-unit">
+                    <div id="countdownDays" class="countdown-number">00</div>
+                    <div class="countdown-label">Hari</div>
+                </div>
+                <div class="countdown-unit">
+                    <div id="countdownHours" class="countdown-number">00</div>
+                    <div class="countdown-label">Jam</div>
+                </div>
+                <div class="countdown-unit">
+                    <div id="countdownMinutes" class="countdown-number">00</div>
+                    <div class="countdown-label">Menit</div>
+                </div>
+                <div class="countdown-unit">
+                    <div id="countdownSeconds" class="countdown-number">00</div>
+                    <div class="countdown-label">Detik</div>
+                </div>
+            </div>
+            <div id="countdownMessage">Tombol akan aktif saat hari ulang tahun tiba! ✨</div>
+        </div>
+        
+        <button id="openBtn" disabled>💌 Buka</button>
+    </div>
+
+    
+    <div id="messageBox" aria-hidden="true">
+        <div id="messageContent" role="document" aria-labelledby="title">
+            
+            <div class="profile-container">
+                <div class="profile-photo-wrapper" id="profilePhotoWrapper">
+                    <img src="https://bit.ly/4qwHHCn" 
+                         alt="Foto Si Cantik" class="profile-photo no-download">
+                    <div class="photo-decoration top">🎀</div>
+                    <div class="photo-decoration bottom">✨</div>
+                    
+                    <div class="photo-protection"></div>
+                </div>
+            </div>
+
+            
+            <div class="name-under-photo">Wulan Ayu D.W.</div>
+
+            
+            <div id="timeWrapper">
+                <div class="date-age-container">
+                    <p id="birthDate" class="birth-date" aria-live="polite"></p>
+                    <p id="ageInfo" class="birth-age" aria-live="polite"></p>
+                </div>
+                <p id="currentDateTime" class="current-date" aria-live="polite"></p>
+            </div>
+
+            
+            <h1 id="title" class="neonTitle" role="heading" aria-live="polite">
+                🎉 Otanjoubi Omedetou 🎉
+            </h1>
+
+            
+            <div class="gift-gif-container">
+                <img src="https://bit.ly/3YixBsC" 
+                     alt="JJK Gift" class="gift-gif no-download">
+            </div>
+
+            
+            <div id="typedText" aria-live="polite"></div>
+
+            
+            <div id="heartWrap">
+                <span class="bigHeart" aria-hidden="true">❤️</span>
+            </div>
+
+            
+            <div class="btnRow" style="margin-top:12px;">
+                <button id="giftBtn" class="btn"><span class="gift-icon">🎁</span> Ada Hadiah Disini!</button>
+            </div>
+        </div>
+    </div>
+
+    
+<div id="endScreen" role="dialog" aria-modal="true">
+    <div id="endInner">
+        <h2>Terima kasih telah membuka pesannya 🎀</h2>
+
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+        <p class="typing-line"></p>
+
+        <p class="hint" style="font-style:italic; opacity:0.6;">
+            Disarankan ngambilnya buka lewat chrome di hp ,
+            tapi kalau mau lihat tampilannya di rekomdasiin pakai laptop :D
+        </p>
+
+        
+        <div class="btnRow" style="
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+            width: 100%;
+        ">
+            <button id="replayBtn" class="btn" style="
+                min-width: 160px;
+                padding: 0.8rem 1.5rem;
+            ">🔄 Mainkan Lagi</button>
+            <button id="giftEndBtn" class="btn" style="
+                min-width: 160px;
+                padding: 0.8rem 1.5rem;
+            ">
+                <span class="gift-icon">🎁</span> Ambil Gift
+            </button>
+        </div>
+    </div>
+
+    
+    <div id="signature"> from A.M.</div>
+</div>
+
+    
+    <canvas id="canvas"></canvas>
+
+    
+    <div id="whisperContainer"></div>
+    <div id="cuteLayer" class="cute-layer"></div>
+    <div id="countdownOverlay" style="display:none">
+        <div class="countdown-cute" id="countdownCute"></div>
+        <div id="countdownNumber">3</div>
+    </div>
+    
+    
+    <canvas id="rocketCanvas"></canvas>
+
+    
+    <script src="main.js"></script>
+    <script src="effects.js"></script>
+    <script src="fireworks.js"></script>
+
+<div id="signatureGlobal">from A.M.</div>
+</body>
+</html>
