@@ -1,5 +1,3 @@
-
-
 (function addCuteFeatures() {
     
     const body = document.body;
@@ -152,8 +150,11 @@ function showWhisper(text){
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
-    setTimeout(()=> showWhisper("Aku selalu di sini 🤍"), 3000);
-    setTimeout(()=> showWhisper("Pelan-pelan bacanya ya…"), 7000);
+    setTimeout(()=> showWhisper("Ada sesuatu disini 🤍"), 1500);
+    setTimeout(()=> showWhisper("Semoga Wulan sukaa…"), 3000);
+    setTimeout(()=> showWhisper("Ini cuma buat Wulan"), 4500);
+    setTimeout(()=> showWhisper("Ini spesial buat Wulan"), 6000);
+
 });
 
 
