@@ -2085,3 +2085,40 @@ body {
     z-index: 1;
     pointer-events: none;
 }
+
+#signature,
+#signatureGlobal {
+    position: fixed !important;
+    right: 18px !important;
+    bottom: 14px !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    opacity: 0.95 !important;
+    font-style: italic !important;
+    transform: rotate(-6deg) !important;
+    text-shadow: 
+        0 0 6px rgba(255, 180, 255, 0.9),
+        0 0 14px rgba(255, 120, 220, 0.6) !important;
+    pointer-events: none !important;
+    z-index: 2147483647 !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+#startScreen,
+#messageBox,
+#endScreen {
+    pointer-events: none;
+}
+
+#startScreen > *,
+#messageBox > *,
+#endScreen > * {
+    pointer-events: auto;
+}
+
+#signature,
+#signatureGlobal {
+    pointer-events: none;
+}
