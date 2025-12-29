@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    startMenuAnimations();
+    //startMenuAnimations();
 
     openBtn.addEventListener("click", startExperience);
 
