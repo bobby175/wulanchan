@@ -746,7 +746,7 @@ Dan Selamat Tahun Baru 🎉`;
         createGiftEndAnimation(event);
 
         setTimeout(() => {
-            window.open("https://id.shp.ee/jjVwRJq", "_blank");
+            window.open("https://link.dana.id/ambil?c=s47cr5t2m&r=klVBKb", "_blank");
         }, 800);
     });
 
