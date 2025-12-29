@@ -81,18 +81,6 @@
     }
 
     
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
     [openBtnLocal, giftBtnLocal, giftEndBtnLocal, document.getElementById("replayBtn")].forEach(btn => {
         if (btn) btn.classList.add("shine");
     });
@@ -102,10 +90,6 @@
         const originalStart = window.startExperience;
         window.startExperience = function() {
             try { originalStart(); } catch(e){ console.warn(e); }
-            
-            
-            
-            
             
             window._whisperKeeper = setInterval(()=> spawnWhisper(), 5000 + Math.random()*2000); 
             
@@ -151,9 +135,6 @@ function showWhisper(text){
 
 document.addEventListener('DOMContentLoaded', ()=>{
     setTimeout(()=> showWhisper("Ada sesuatu disini 🤍"), 1500);
-    setTimeout(()=> showWhisper("Semoga Wulan sukaa…"), 3000);
-    setTimeout(()=> showWhisper("Ini cuma buat Wulan"), 4500);
-    setTimeout(()=> showWhisper("Ini spesial buat Wulan"), 6000);
 
 });
 
