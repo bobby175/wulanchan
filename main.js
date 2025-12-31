@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const countdownSeconds = document.getElementById('countdownSeconds');
     const countdownMessage = document.getElementById('countdownMessage');
     const birthdayCountdown = document.getElementById('birthdayCountdown');
-    const BIRTH_MONTH = 0; 
-    const BIRTH_DATE = 1;
+    const BIRTH_MONTH = 11; 
+    const BIRTH_DATE = 31;
     
 
     function updateBirthdayCountdown() {
