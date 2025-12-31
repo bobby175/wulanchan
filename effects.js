@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let audio;
     giftBtn.addEventListener("click", () => {
         if(!audio){
-            audio = new Audio("https://raw.githubusercontent.com/bobby175/audio/main/v4.www-y2mate.blog%20-%20TULUS%20-%20Jatuh%20Suka%20(Official%20Lyric%20Video)%20(320%20KBps)%20(1)%20(mp3cut.net).mp3");
+            audio = new Audio("https://raw.githubusercontent.com/bobby175/audio/main/Where%20Our%20Blue.mp3");
             audio.loop = false;
         }
         audio.play().catch(()=>{});
