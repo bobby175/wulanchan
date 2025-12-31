@@ -627,7 +627,7 @@ const endTexts = [
     "Hai manusia favorit, semoga hari ini penuh berkah dan kebahagiaan yaa",
     "trimakasih telah membuat dunia kerjaku lebih berwarna walau jarang ngobrol sih,",
     "sebenernya pengen bisa ngobrol diluar tapii kayaknya gamungkin bisaa.",
-    "apalagi semenjak tau wulan deket sama temen kerja juga. mungkin udah saatnya aku close menyukai secara diam² ",
+    "apalagi semenjak tau wulan deket sama temen kerja juga. mungkin udah saatnya close menyukai secara diam² :V",
     "tapi itu ga penting, yang penting sekarang Wulan harus bahagia, tambah sehat dan tambah cantik pulaa wkwk",
     "oh iya ini ada gift buat Wulan, traktirannya beli sendirii tapii :v",
     "Ambil giftnya di bawah ya , bisa langsung bisa lewat game ada hadiah randomnya jugaa hehe",
