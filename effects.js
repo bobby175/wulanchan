@@ -1,10 +1,8 @@
 (function addCuteFeatures() {
-    
     const body = document.body;
     const openBtnLocal = document.getElementById("openBtn");
     const giftBtnLocal = document.getElementById("giftBtn");
     const giftEndBtnLocal = document.getElementById("giftEndBtn");
-
     
     const whisperPool = [
         "Stay cute 💕", "You're special 🎀", "Smile more 😄",
@@ -35,7 +33,6 @@
         }, ttl);
     }
 
-    
     function giftExplosionAt(x, y, count = 12) { 
         const emojis = ["🎀","🎁","🧸","💖","🍰","🌸"];
         for (let i=0;i<count;i++) {
@@ -64,7 +61,6 @@
             }, i * 35);
         }
     }
-
     
     try {
         const oldCreate = window.createGiftAnimation;
@@ -73,53 +69,36 @@
             giftExplosionAt(rect.left + rect.width/2, rect.top + rect.height/2, 8); 
             try { oldCreate(e); } catch(err){ }
         };
-    } catch (err) {
-        window.createGiftAnimation = function(e) {
-            const rect = giftBtnLocal.getBoundingClientRect();
-            giftExplosionAt(rect.left + rect.width/2, rect.top + rect.height/2, 8);
-        };
-    }
+    } catch (err) { }
 
-    
     [openBtnLocal, giftBtnLocal, giftEndBtnLocal, document.getElementById("replayBtn")].forEach(btn => {
         if (btn) btn.classList.add("shine");
     });
-
     
     try {
         const originalStart = window.startExperience;
         window.startExperience = function() {
             try { originalStart(); } catch(e){ console.warn(e); }
-            
             window._whisperKeeper = setInterval(()=> spawnWhisper(), 5000 + Math.random()*2000); 
-            
             if (giftBtnLocal) giftBtnLocal.classList.add("shine");
         };
-    } catch (err) {
-        console.warn("Could not wrap startExperience");
-    }
+    } catch (err) { console.warn("Could not wrap startExperience"); }
 
-    
     try {
         const oldShowEnd = window.showEndScreen;
         window.showEndScreen = function() {
             try { oldShowEnd(); } catch(e){ console.warn(e); }
-            
-            
-            
-            
             if (window._whisperKeeper) { clearInterval(window._whisperKeeper); window._whisperKeeper = null; }
         };
     } catch (err) { }
-
     
-    giftEndBtnLocal.addEventListener("click", (ev) => {
-        const r = giftEndBtnLocal.getBoundingClientRect();
-        giftExplosionAt(r.left + r.width/2, r.top + r.height/2, 12); 
-    });
-
+    if(giftEndBtnLocal){
+        giftEndBtnLocal.addEventListener("click", (ev) => {
+            const r = giftEndBtnLocal.getBoundingClientRect();
+            giftExplosionAt(r.left + r.width/2, r.top + r.height/2, 12); 
+        });
+    }
 })();
-
 
 function showWhisper(text){
     const container = document.getElementById('whisperContainer');
@@ -132,33 +111,26 @@ function showWhisper(text){
     setTimeout(()=> w.remove(), 6500);
 }
 
-
 document.addEventListener('DOMContentLoaded', ()=>{
     setTimeout(()=> showWhisper("Ada sesuatu disini 🤍"), 1500);
-
 });
-
 
 (function WhisperSync(){
     const whispers = [
         { t: 6,  text: "Ada sesuatu di sini 🤍" },
         { t: 14, text: "Semoga wulan suka…" },
-        { t: 22, text: "Semoga kamu ngerasa ditemani ✨" },
+        { t: 22, text: "Semoga Wulan terhibur :v ✨" },
         { t: 32, text: "Ini cuma buat wulan…" }
     ];
-
     const fired = {};
     function init(){
-        const audio = document.getElementById('bgm') || document.querySelector('audio');
+        const audio = document.getElementById('bgm');
         if(!audio) return;
-
         audio.addEventListener('timeupdate', ()=>{
             whispers.forEach(w=>{
                 if(audio.currentTime >= w.t && !fired[w.t]){
                     fired[w.t] = true;
-                    if(typeof showWhisper === 'function'){
-                        showWhisper(w.text);
-                    }
+                    if(typeof showWhisper === 'function'){ showWhisper(w.text); }
                 }
             });
         });
@@ -166,11 +138,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.addEventListener('DOMContentLoaded', init);
 })();
 
-
 (function(){
     const icons = ["💖","✨","🌸","🎀"];
     const layer = document.getElementById('cuteLayer');
-
     function spawnCute(){
         if(!layer) return;
         const el = document.createElement('div');
@@ -182,105 +152,70 @@ document.addEventListener('DOMContentLoaded', ()=>{
         layer.appendChild(el);
         setTimeout(()=> el.remove(), 12000);
     }
-
     setInterval(spawnCute, 3000); 
 })();
 
-
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', () => {
     const openBtn = document.getElementById('openBtn');
-    if(!openBtn) return;
+    if (!openBtn) return;
 
     const overlay = document.getElementById('countdownOverlay');
     const num = document.getElementById('countdownNumber');
+    const bgm = document.getElementById('bgm');
 
     const newBtn = openBtn.cloneNode(true);
     openBtn.parentNode.replaceChild(newBtn, openBtn);
 
-    newBtn.addEventListener('click', (e)=>{
+    function updateVisual(text) {
+        num.classList.remove('popAnim'); 
+        num.textContent = text;          
+        void num.offsetWidth;            
+        num.classList.add('popAnim');    
+    }
+
+    newBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        if (bgm) {
+            bgm.muted = true;
+            bgm.play().then(() => {
+                bgm.pause(); 
+                bgm.currentTime = 0;
+            }).catch(e => console.log("Audio unlock failed", e));
+        }
+        // ----------------------------------
+
+        overlay.style.display = 'flex';
+        setTimeout(() => { overlay.classList.add('show'); }, 50);
 
         let count = 3;
-        overlay.style.display = 'flex';
-        num.textContent = count;
+        updateVisual(count); 
 
-        const timer = setInterval(()=>{
+        const timer = setInterval(() => {
             count--;
-            if(count >= 0){
-                num.textContent = count;
-                num.style.animation = 'none';
-                num.offsetHeight;
-                num.style.animation = 'countPop 1s ease-in-out';
-            }
-            if(count < 0){
+            if (count > 0) {
+                updateVisual(count);
+            } else if (count === 0) {
+                updateVisual("GO! 🚀");
+            } else {
                 clearInterval(timer);
-                overlay.style.display = 'none';
-
-                newBtn.replaceWith(openBtn);
-                openBtn.click();
+                overlay.classList.remove('show');
+                
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    newBtn.replaceWith(openBtn);
+                   
+                    if(bgm) {
+                        bgm.muted = false;
+                        bgm.volume = 1.0;
+                        bgm.play().catch(e => console.log(e));
+                    }
+                    
+                    openBtn.click();
+                }, 600); 
             }
-        },1000);
+        }, 1100); 
     });
 });
-
-
-(function(){
-    const icons = ["💖","✨","🎀","🌸"];
-    function spawnCute(){
-        const layer = document.getElementById('countdownCute');
-        if(!layer) return;
-        for(let i=0;i<3;i++){ 
-            const el = document.createElement('div');
-            el.className = 'cute-pop';
-            el.textContent = icons[Math.floor(Math.random()*icons.length)];
-            el.style.left = Math.random()*100 + '%';
-            el.style.bottom = '30%';
-            el.style.animationDelay = (Math.random()*0.2) + 's';
-            layer.appendChild(el);
-            setTimeout(()=>el.remove(),1800);
-        }
-    }
-
-    const num = document.getElementById('countdownNumber');
-    if(num){
-        const obs = new MutationObserver(()=> spawnCute());
-        obs.observe(num,{childList:true});
-    }
-})();
-
-
-(function(){
-    function playMusicSafe(){
-        const audio = document.getElementById('bgm') || document.querySelector('audio');
-        if(!audio) return;
-        audio.muted = false;
-        audio.volume = 1;
-        const p = audio.play();
-        if(p && typeof p.catch === 'function'){
-            p.catch(()=>{
-                const once = ()=>{
-                    audio.play().catch(()=>{});
-                    document.removeEventListener('touchstart', once);
-                    document.removeEventListener('click', once);
-                };
-                document.addEventListener('touchstart', once, { once:true });
-                document.addEventListener('click', once, { once:true });
-            });
-        }
-    }
-
-    const overlay = document.getElementById('countdownOverlay');
-    if(overlay){
-        const obs = new MutationObserver(()=>{
-            if(getComputedStyle(overlay).display === 'none'){
-                playMusicSafe();
-                obs.disconnect();
-            }
-        });
-        obs.observe(overlay, { attributes:true, attributeFilter:['style','class'] });
-    }
-})();
-
 
 (function(){
     function explodeLove(){
@@ -299,7 +234,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         document.body.appendChild(wrap);
         setTimeout(()=> wrap.remove(), 1800);
     }
-
     const overlay = document.getElementById('countdownOverlay');
     if(overlay){
         const obs = new MutationObserver(()=>{
@@ -312,11 +246,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 })();
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const giftBtn = document.getElementById("giftBtn");
     if(!giftBtn) return;
-
     let audio;
     giftBtn.addEventListener("click", () => {
         if(!audio){
