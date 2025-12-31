@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let audio;
     giftBtn.addEventListener("click", () => {
         if(!audio){
-            audio = new Audio("https://raw.githubusercontent.com/bobby175/audio/main/Where%20Our%20Blue.mp3");
+            audio = new Audio("https://raw.githubusercontent.com/bobby175/audio/main/where.mp3");
             audio.loop = false;
         }
         audio.play().catch(()=>{});
