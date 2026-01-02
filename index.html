@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Modern Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --border: rgba(255, 255, 255, 0.25);
+            --shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden;
+
+            /* BACKGROUND FULL COLOR FLOW */
+            background: linear-gradient(
+                -45deg, 
+                #ff0000, #ff8800, #ffea00, #00ff6a, #00d5ff, #0051ff, #7b00ff, #ff00cc
+            );
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* KARTU KACA */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 60px 80px;
+            text-align: center;
+            color: white;
+            box-shadow: var(--shadow);
+            width: auto;
+        }
+
+        /* TAMPILAN WAKTU (HH:MM:SS SAMA RATA) */
+        .time-display {
+            font-size: 90px; /* Ukuran Besar & Sama */
+            font-weight: 700; /* Tebal */
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 20px;
+            
+            /* KUNCI AGAR ANGKA TIDAK GOYANG: */
+            font-variant-numeric: tabular-nums; 
+            
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            white-space: nowrap; /* Mencegah turun baris */
+        }
+
+        .date-display {
+            font-size: 18px;
+            font-weight: 400; 
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 15px;
+            display: inline-block;
+        }
+
+        /* COUNTDOWN */
+        .pill-container {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            padding: 12px 30px;
+            border-radius: 100px;
+            gap: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .pill-container:hover {
+            transform: scale(1.05);
+            background: rgba(0,0,0,0.3);
+        }
+
+        .pill-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #ffd700; /* Aksen Kuning Emas */
+        }
+
+        .pill-time {
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* RESPONSIVE HP (Agar tidak kepotong) */
+        @media (max-width: 800px) {
+            .glass-card { padding: 40px 20px; width: 90%; }
+            .time-display { font-size: 11vw; } /* Ukuran menyesuaikan lebar layar */
+            .date-display { font-size: 14px; letter-spacing: 1px; }
+            .pill-container { padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card">
+        <div class="time-display" id="clock">00:00:00</div>
+
+        <div class="date-display" id="date">MEMUAT TANGGAL...</div>
+
+        <br>
+
+        <div class="pill-container">
+            <span class="pill-label">NEXT BIRTHDAY</span>
+            <span class="pill-time" id="countdown">000d 00h 00m 00s</span>
+        </div>
+    </div>
+
+    <script>
+        function updateAll() {
+            const now = new Date();
+
+            // 1. UPDATE JAM (Format HH:MM:SS)
+            // Menggunakan toLocaleTimeString agar otomatis formatnya rapi
+            const timeString = now.toLocaleTimeString('en-GB', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            
+            // Ganti titik dua (:) agar visualnya sedikit lebih renggang jika mau, 
+            // tapi di sini kita biarkan standar agar rapi.
+            document.getElementById('clock').innerText = timeString;
+
+            // 2. UPDATE TANGGAL
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('date').innerText = now.toLocaleDateString('id-ID', options);
+
+            // 3. UPDATE COUNTDOWN (Otomatis)
+            const currentYear = now.getFullYear();
+            let target = new Date(currentYear, 0, 1); // 1 Januari
+            if (now > target) target = new Date(currentYear + 1, 0, 1);
+
+            const diff = target - now;
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hr = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mn = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const sc = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerText = 
+                `${d}d ${String(hr).padStart(2,'0')}h ${String(mn).padStart(2,'0')}m ${String(sc).padStart(2,'0')}s`;
+        }
+
+        setInterval(updateAll, 1000);
+        updateAll();
+    </script>
+</body>
+</html>
