@@ -144,7 +144,7 @@
             document.getElementById('seconds').innerText = s;
 
             const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-            document.getElementById('date').innerText = now.toLocaleDateString('id-ID', options);
+            document.getElementById('date').innerText = now.toLocaleDateString('en-ID', options);
 
             const currentYear = now.getFullYear();
             let target = new Date(currentYear, 0, 1); 
