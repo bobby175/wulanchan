@@ -186,7 +186,7 @@
             document.getElementById('minutes').innerText = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('seconds').innerText = String(now.getSeconds()).padStart(2, '0');
             const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-            document.getElementById('date').innerText = now.toLocaleDateString('id-ID', options);
+            document.getElementById('date').innerText = now.toLocaleDateString('en-ID', options);
             const currentYear = now.getFullYear();
             let target = new Date(currentYear, 0, 1);
             if (now > target) target = new Date(currentYear + 1, 0, 1);
