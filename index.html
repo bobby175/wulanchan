@@ -71,8 +71,7 @@
         .content-body {
             flex: 1;
             overflow-y: auto;
-            /* Padding bawah diperbesar (120px) agar copyright tidak tertutup tombol HP */
-            padding: 40px 20px 120px 20px;
+            padding: 40px 20px 150px 20px;
             display: flex;
             justify-content: center;
         }
@@ -86,6 +85,28 @@
         .content-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
         .content-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
 
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .stagger-text {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 1s ease-out;
+        }
+
+        .fade-in-last {
+            opacity: 0;
+            transition: opacity 2s ease-in;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         h1 {
             font-family: 'Playfair Display', serif; font-weight: 600; font-size: 2rem;
             margin-bottom: 40px; text-align: center; color: #fff;
@@ -94,18 +115,13 @@
         }
         
         .subtitle-header {
-            display: block;
-            font-size: 0.6em;
-            font-weight: 400;
-            font-style: italic;
-            color: #cbd5e1;
-            margin-top: 5px;
+            display: block; font-size: 0.6em; font-weight: 400; font-style: italic;
+            color: #cbd5e1; margin-top: 5px;
         }
 
         p {
             font-size: 1.1rem; line-height: 1.9; margin-bottom: 30px;
             color: #cbd5e1; text-align: justify;
-            opacity: 0; transform: translateY(20px); transition: all 1s ease-out;
         }
 
         .poetry-section {
@@ -121,40 +137,32 @@
         .final-words { margin: 60px 0; text-align: center; }
         .final-words span {
             display: block; font-family: 'Playfair Display', serif; font-size: 1.4rem;
-            color: #fff; margin-bottom: 10px; opacity: 0; transform: translateY(10px); transition: all 1s ease-out;
+            color: #fff; margin-bottom: 10px;
         }
 
         .footer-wrapper {
-            text-align: center; opacity: 0; transition: opacity 2s ease-in;
-            border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;
+            text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;
         }
         .mood-text { font-size: 0.8rem; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
         
         .copyright { font-size: 0.75rem; opacity: 0.5; letter-spacing: 1px; }
         
         .copyright a {
-            color: inherit;
-            text-decoration: none;
+            color: inherit; text-decoration: none;
             border-bottom: 1px dotted rgba(255, 255, 255, 0.5);
             transition: all 0.3s ease;
         }
         .copyright a:hover {
-            color: #a5b4fc;
-            text-shadow: 0 0 8px rgba(165, 180, 252, 0.6);
-            border-bottom: 1px solid #a5b4fc;
-            opacity: 1;
+            color: #a5b4fc; text-shadow: 0 0 8px rgba(165, 180, 252, 0.6);
+            border-bottom: 1px solid #a5b4fc; opacity: 1;
         }
-
-        .visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 768px) {
             .window-header { justify-content: space-between; padding: 0 15px; }
             .desktop-controls, .app-title { display: none; }
             .mobile-status-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; }
             
-            /* Penyesuaian khusus mobile: Padding bawah sangat besar */
             .content-body { padding: 20px 20px 150px 20px; }
-            
             h1 { font-size: 1.5rem; text-align: left; border-bottom: none; margin-bottom: 20px; }
             p { font-size: 1rem; text-align: left; }
             .poetry-section { padding: 20px 0; background: transparent; border: none; font-size: 1.1rem; }
@@ -289,7 +297,7 @@
                 });
             }, delayCounter + 200);
 
-            const totalTime = delayCounter + (staggerElements.length * 800) + 800;
+            const totalTime = delayCounter + (staggerElements.length * 800) + 1000;
             setTimeout(() => {
                 footer.style.opacity = 1;
             }, totalTime);
