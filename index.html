@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gatau Ini Apa</title>
+    <title>Pesan Untukmu</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,7 +71,8 @@
         .content-body {
             flex: 1;
             overflow-y: auto;
-            padding: 40px 20px;
+            /* Padding bawah diperbesar (120px) agar copyright tidak tertutup tombol HP */
+            padding: 40px 20px 120px 20px;
             display: flex;
             justify-content: center;
         }
@@ -125,10 +126,24 @@
 
         .footer-wrapper {
             text-align: center; opacity: 0; transition: opacity 2s ease-in;
-            border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; padding-bottom: 50px;
+            border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;
         }
         .mood-text { font-size: 0.8rem; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
-        .copyright { font-size: 0.75rem; opacity: 0.3; letter-spacing: 1px; }
+        
+        .copyright { font-size: 0.75rem; opacity: 0.5; letter-spacing: 1px; }
+        
+        .copyright a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .copyright a:hover {
+            color: #a5b4fc;
+            text-shadow: 0 0 8px rgba(165, 180, 252, 0.6);
+            border-bottom: 1px solid #a5b4fc;
+            opacity: 1;
+        }
 
         .visible { opacity: 1; transform: translateY(0); }
 
@@ -137,7 +152,9 @@
             .desktop-controls, .app-title { display: none; }
             .mobile-status-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; }
             
-            .content-body { padding: 20px; }
+            /* Penyesuaian khusus mobile: Padding bawah sangat besar */
+            .content-body { padding: 20px 20px 150px 20px; }
+            
             h1 { font-size: 1.5rem; text-align: left; border-bottom: none; margin-bottom: 20px; }
             p { font-size: 1rem; text-align: left; }
             .poetry-section { padding: 20px 0; background: transparent; border: none; font-size: 1.1rem; }
@@ -229,7 +246,10 @@
 
                 <div class="footer-wrapper fade-in-last">
                     <div class="mood-text">&mdash; Sebuah Perasaan &mdash;</div>
-                    <div class="copyright">Copyright © 2024 by Ikhlas</div>
+                    <div class="copyright">
+                        Copyright © 2024 by 
+                        <a href="https://www.instagram.com/iik.hlas?igsh=NWZwY2dwcTV6N28=" target="_blank">Ikhlas</a>
+                    </div>
                 </div>
 
             </div>
