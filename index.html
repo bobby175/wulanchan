@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Gatau apa ini</title>
+    <title>Gatau Ini apa</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
             overflow: hidden;
         }
 
-        /* --- Overlay Pembuka (Agar Musik Bisa Jalan) --- */
+        /* --- Overlay --- */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #0f172a; z-index: 9999;
@@ -30,12 +30,10 @@
             align-items: center; justify-content: center;
             transition: opacity 1s ease-out;
         }
-        
         .mail-icon {
             font-size: 4rem; color: #a5b4fc; margin-bottom: 20px;
             animation: float 3s ease-in-out infinite;
         }
-
         .btn-open {
             padding: 12px 30px; border-radius: 50px;
             background: #a5b4fc; color: #1e1b4b;
@@ -45,12 +43,10 @@
             transition: transform 0.2s;
         }
         .btn-open:active { transform: scale(0.95); }
-        
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
         }
-
         .hidden { opacity: 0; pointer-events: none; }
 
         /* --- Background --- */
@@ -67,18 +63,13 @@
         }
 
         .app-container {
-            position: relative;
-            z-index: 10;
-            width: 100vw;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            position: relative; z-index: 10;
+            width: 100vw; height: 100%;
+            display: flex; flex-direction: column;
             background: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(5px);
-            opacity: 0; /* Mulai hidden, muncul setelah klik */
-            transition: opacity 1s ease-in;
+            opacity: 0; transition: opacity 1s ease-in;
         }
-
         .app-container.show { opacity: 1; }
 
         .window-header {
@@ -99,24 +90,24 @@
         }
         .mobile-status-bar { display: none; }
 
-        /* Tombol Musik Pojok Kanan Atas */
-        .music-control {
+        /* Tombol Musik Desktop (Pojok Kanan Atas Window) */
+        .music-control-desktop {
             position: absolute; right: 15px; top: 15px;
             color: rgba(255,255,255,0.5); font-size: 1rem; cursor: pointer;
             z-index: 20;
         }
 
+        /* Content Body */
         .content-body {
             flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
             padding: 20px 20px 80px 20px;
             display: flex; justify-content: center;
         }
-
         .text-container { width: 100%; max-width: 600px; }
-
         .content-body::-webkit-scrollbar { width: 4px; }
         .content-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
 
+        /* Animations */
         .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
         .stagger-text { opacity: 0; transform: translateY(10px); transition: all 0.8s ease-out; }
         .visible { opacity: 1; transform: translateY(0); }
@@ -127,41 +118,35 @@
             padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);
             line-height: 1.3;
         }
-        
         .subtitle-header {
             display: block; font-size: 0.6em; font-weight: 400; font-style: italic;
             color: #cbd5e1; margin-top: 5px;
         }
-
         p {
             font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px;
             color: #cbd5e1; text-align: justify;
         }
-
         .poetry-section {
             text-align: center; font-family: 'Playfair Display', serif; font-style: italic;
             margin: 40px 0; padding: 25px;
             background: rgba(255,255,255,0.03); border-radius: 12px; color: #e0e7ff;
             border: 1px dashed rgba(255,255,255,0.1);
         }
-
         .highlight { color: #a5b4fc; font-weight: bold; }
         .sad-closing { font-size: 0.95rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; margin-top: 30px; }
-
         .final-words { margin: 50px 0 30px 0; text-align: center; }
         .final-words span {
             display: block; font-family: 'Playfair Display', serif; font-size: 1.3rem;
             color: #fff; margin-bottom: 8px;
         }
 
+        /* Footer */
         .footer-wrapper {
             text-align: center; border-top: 1px solid rgba(255,255,255,0.05); 
             padding-top: 20px; margin-bottom: 10px;
             opacity: 0; animation: footerAppear 1s ease forwards; animation-delay: 3s; 
         }
-        
         @keyframes footerAppear { to { opacity: 1; } }
-
         .mood-text { font-size: 0.75rem; opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
         .copyright { font-size: 0.75rem; opacity: 0.8; letter-spacing: 0.5px; }
         .copyright a {
@@ -170,10 +155,17 @@
         }
         .copyright a:hover { border-bottom: 1px solid #a5b4fc; text-shadow: 0 0 5px rgba(165,180,252,0.5); }
 
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .window-header { justify-content: space-between; }
-            .desktop-controls, .app-title { display: none; }
-            .mobile-status-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7); font-size: 0.8rem; }
+            .desktop-controls, .app-title, .music-control-desktop { display: none; } /* Sembunyikan kontrol desktop di HP */
+            
+            /* Tampilan Status Bar HP */
+            .mobile-status-bar { 
+                display: flex; width: 100%; justify-content: space-between; align-items: center; 
+                color: rgba(255,255,255,0.7); font-size: 0.8rem; 
+            }
+            
             .content-body { padding: 15px 20px 80px 20px; }
             h1 { font-size: 1.6rem; text-align: left; border-bottom: none; margin-bottom: 20px; }
             p { font-size: 1rem; text-align: left; }
@@ -202,13 +194,20 @@
                 <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
             </div>
             <div class="app-title">isi_hati.txt</div>
+            <div class="music-control-desktop" onclick="toggleMusic()">
+                <i class="fas fa-volume-up" class="musicIconDisplay"></i>
+            </div>
+
             <div class="mobile-status-bar">
                 <span><i class="fas fa-chevron-left"></i> Notes</span>
+                
                 <span id="clock" style="font-weight: 600;">00:00</span>
-                <span><i class="fas fa-signal"></i> &nbsp; <i class="fas fa-battery-three-quarters"></i></span>
-            </div>
-            <div class="music-control" onclick="toggleMusic()">
-                <i class="fas fa-volume-up" id="musicIcon"></i>
+                
+                <span style="display: flex; align-items: center;">
+                    <i class="fas fa-volume-up musicIconDisplay" onclick="toggleMusic()" style="margin-right: 15px; cursor: pointer; color: #a5b4fc;"></i>
+                    
+                    <i class="fas fa-signal"></i> &nbsp; <i class="fas fa-battery-three-quarters"></i>
+                </span>
             </div>
         </div>
 
@@ -300,40 +299,46 @@
         const bgMusic = document.getElementById('bgMusic');
         const overlay = document.getElementById('overlay');
         const appContent = document.getElementById('appContent');
-        const musicIcon = document.getElementById('musicIcon');
+        
+        // Ambil semua icon musik (baik di desktop maupun di mobile status bar)
+        const musicIcons = document.querySelectorAll('.musicIconDisplay');
+        
         let isPlaying = false;
 
         function startExperience() {
-            // 1. Putar Musik
-            bgMusic.volume = 0.7; // Volume 70%
+            bgMusic.volume = 0.7;
             bgMusic.play().then(() => {
                 isPlaying = true;
             }).catch(error => {
                 console.log("Audio play failed, user interaction needed.");
             });
 
-            // 2. Hilangkan Overlay
             overlay.classList.add('hidden');
             setTimeout(() => {
                 overlay.style.display = 'none';
             }, 1000);
 
-            // 3. Tampilkan Konten Utama
             appContent.classList.add('show');
-
-            // 4. Jalankan Animasi Text
             runAnimations();
         }
 
         function toggleMusic() {
             if (isPlaying) {
                 bgMusic.pause();
-                musicIcon.classList.remove('fa-volume-up');
-                musicIcon.classList.add('fa-volume-mute');
+                // Ubah semua icon jadi mute
+                musicIcons.forEach(icon => {
+                    icon.classList.remove('fa-volume-up');
+                    icon.classList.add('fa-volume-mute');
+                    icon.style.opacity = "0.5";
+                });
             } else {
                 bgMusic.play();
-                musicIcon.classList.remove('fa-volume-mute');
-                musicIcon.classList.add('fa-volume-up');
+                // Ubah semua icon jadi on
+                musicIcons.forEach(icon => {
+                    icon.classList.remove('fa-volume-mute');
+                    icon.classList.add('fa-volume-up');
+                    icon.style.opacity = "1";
+                });
             }
             isPlaying = !isPlaying;
         }
@@ -341,8 +346,7 @@
         function runAnimations() {
             const fadeElements = document.querySelectorAll('.fade-in');
             const staggerElements = document.querySelectorAll('.stagger-text');
-            
-            let delayCounter = 500; // Mulai delay sedikit setelah klik
+            let delayCounter = 500;
             
             fadeElements.forEach((el) => {
                 setTimeout(() => {
