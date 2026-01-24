@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pesan Untukmu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Gatau ini apa</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,10 +15,12 @@
 
         body {
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            /* Menggunakan dvh untuk mobile modern, fallback vh untuk browser lama */
             min-height: 100vh;
+            min-height: 100dvh;
             font-family: 'Lato', sans-serif;
             color: #e2e8f0;
-            overflow: hidden; 
+            overflow: hidden; /* Body tidak boleh scroll, yang scroll content-nya */
         }
 
         .bg-particles {
@@ -36,7 +38,9 @@
             position: relative;
             z-index: 10;
             width: 100vw;
-            height: 100vh;
+            /* PERBAIKAN PENTING: Gunakan 100dvh agar pas di layar HP */
+            height: 100vh; 
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             background: rgba(15, 23, 42, 0.4);
@@ -71,19 +75,25 @@
         .content-body {
             flex: 1;
             overflow-y: auto;
-            /* Padding bawah besar agar copyright aman tidak tertutup di HP */
-            padding: 40px 20px 150px 20px;
+            -webkit-overflow-scrolling: touch; 
+            
+            /* Padding bawah extra besar agar copyright tidak tertutup browser bar */
+            padding: 40px 20px 180px 20px; 
+            
             display: flex;
             justify-content: center;
+            position: relative;
         }
 
         .text-container {
             width: 100%;
             max-width: 650px;
+            /* Pastikan container text tidak overflow horizontal */
+            overflow-x: hidden;
         }
 
-        .content-body::-webkit-scrollbar { width: 8px; }
-        .content-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        .content-body::-webkit-scrollbar { width: 5px; }
+        .content-body::-webkit-scrollbar-track { background: transparent; }
         .content-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
 
         /* Animation Classes */
@@ -131,40 +141,46 @@
         .highlight { color: #a5b4fc; font-weight: bold; }
         .sad-closing { font-size: 1rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; margin-top: 40px; }
 
-        .final-words { margin: 60px 0; text-align: center; }
+        .final-words { margin: 60px 0 40px 0; text-align: center; }
         .final-words span {
             display: block; font-family: 'Playfair Display', serif; font-size: 1.4rem;
             color: #fff; margin-bottom: 10px;
         }
 
-        /* PERBAIKAN FOOTER */
+        /* --- STYLE COPYRIGHT DIPERBAIKI --- */
         .footer-wrapper {
             text-align: center; 
             border-top: 1px solid rgba(255,255,255,0.05); 
             padding-top: 30px;
-            /* Footer menggunakan animasi CSS sendiri, tidak menunggu JS */
+            margin-bottom: 20px; /* Tambah margin bawah sedikit */
+            
+            /* Animasi muncul */
             opacity: 0;
-            animation: footerAppear 1.5s ease forwards;
-            animation-delay: 1.5s; /* Muncul setelah 1.5 detik */
+            animation: footerAppear 1s ease forwards;
+            /* Delay disesuaikan agar tidak muncul terlalu cepat sebelum user scroll */
+            animation-delay: 4s; 
         }
         
         @keyframes footerAppear {
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .mood-text { font-size: 0.8rem; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
+        .mood-text { font-size: 0.8rem; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
         
-        .copyright { font-size: 0.75rem; opacity: 0.7; letter-spacing: 1px; }
+        .copyright { font-size: 0.75rem; opacity: 0.7; letter-spacing: 1px; line-height: 1.5; }
         
         .copyright a {
-            color: inherit; text-decoration: none;
-            border-bottom: 1px dotted rgba(255, 255, 255, 0.5);
+            color: #a5b4fc; /* Warna dibuat lebih terang agar terlihat link */
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(165, 180, 252, 0.5);
             transition: all 0.3s ease;
             position: relative;
-            z-index: 20; /* Pastikan link bisa diklik */
+            z-index: 20;
+            padding-bottom: 2px;
         }
         .copyright a:hover {
-            color: #a5b4fc; text-shadow: 0 0 8px rgba(165, 180, 252, 0.6);
+            text-shadow: 0 0 8px rgba(165, 180, 252, 0.6);
             border-bottom: 1px solid #a5b4fc; opacity: 1;
         }
 
@@ -173,7 +189,9 @@
             .desktop-controls, .app-title { display: none; }
             .mobile-status-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; }
             
-            .content-body { padding: 20px 20px 150px 20px; }
+            /* Padding disesuaikan untuk HP */
+            .content-body { padding: 20px 20px 180px 20px; }
+            
             h1 { font-size: 1.5rem; text-align: left; border-bottom: none; margin-bottom: 20px; }
             p { font-size: 1rem; text-align: left; }
             .poetry-section { padding: 20px 0; background: transparent; border: none; font-size: 1.1rem; }
@@ -290,9 +308,6 @@
             const fadeElements = document.querySelectorAll('.fade-in');
             const staggerElements = document.querySelectorAll('.stagger-text');
             
-            // Hapus logika footer dari JS agar tidak bentrok
-            // Footer sekarang otomatis muncul via CSS
-
             let delayCounter = 0;
             
             fadeElements.forEach((el) => {
