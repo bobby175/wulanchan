@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Gatau ini apa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gatau apa ini</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,19 +15,51 @@
 
         body {
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-            /* Menggunakan dvh untuk mobile modern, fallback vh untuk browser lama */
-            min-height: 100vh;
-            min-height: 100dvh;
+            height: 100vh;
+            height: 100dvh;
             font-family: 'Lato', sans-serif;
             color: #e2e8f0;
-            overflow: hidden; /* Body tidak boleh scroll, yang scroll content-nya */
+            overflow: hidden;
         }
 
+        /* --- Overlay Pembuka (Agar Musik Bisa Jalan) --- */
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f172a; z-index: 9999;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 1s ease-out;
+        }
+        
+        .mail-icon {
+            font-size: 4rem; color: #a5b4fc; margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .btn-open {
+            padding: 12px 30px; border-radius: 50px;
+            background: #a5b4fc; color: #1e1b4b;
+            font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.1rem;
+            border: none; cursor: pointer;
+            box-shadow: 0 0 20px rgba(165, 180, 252, 0.4);
+            transition: transform 0.2s;
+        }
+        .btn-open:active { transform: scale(0.95); }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hidden { opacity: 0; pointer-events: none; }
+
+        /* --- Background --- */
         .bg-particles {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: radial-gradient(white 1px, transparent 0);
             background-size: 40px 40px; opacity: 0.1; z-index: 0;
             animation: moveBackground 60s linear infinite;
+            pointer-events: none;
         }
         @keyframes moveBackground {
             from { background-position: 0 0; }
@@ -38,30 +70,26 @@
             position: relative;
             z-index: 10;
             width: 100vw;
-            /* PERBAIKAN PENTING: Gunakan 100dvh agar pas di layar HP */
-            height: 100vh; 
-            height: 100dvh;
+            height: 100%;
             display: flex;
             flex-direction: column;
             background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(5px); 
+            backdrop-filter: blur(5px);
+            opacity: 0; /* Mulai hidden, muncul setelah klik */
+            transition: opacity 1s ease-in;
         }
+
+        .app-container.show { opacity: 1; }
 
         .window-header {
-            flex-shrink: 0;
-            height: 50px;
+            flex-shrink: 0; height: 50px;
             background: rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 20px;
-            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0 15px; position: relative;
         }
 
-        .desktop-controls {
-            position: absolute; left: 20px; display: flex; gap: 8px;
-        }
+        .desktop-controls { position: absolute; left: 20px; display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
 
@@ -69,55 +97,34 @@
             font-family: monospace; font-size: 0.9rem; color: rgba(255,255,255,0.7);
             letter-spacing: 1px;
         }
-
         .mobile-status-bar { display: none; }
 
+        /* Tombol Musik Pojok Kanan Atas */
+        .music-control {
+            position: absolute; right: 15px; top: 15px;
+            color: rgba(255,255,255,0.5); font-size: 1rem; cursor: pointer;
+            z-index: 20;
+        }
+
         .content-body {
-            flex: 1;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch; 
-            
-            /* Padding bawah extra besar agar copyright tidak tertutup browser bar */
-            padding: 40px 20px 180px 20px; 
-            
-            display: flex;
-            justify-content: center;
-            position: relative;
+            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            padding: 20px 20px 80px 20px;
+            display: flex; justify-content: center;
         }
 
-        .text-container {
-            width: 100%;
-            max-width: 650px;
-            /* Pastikan container text tidak overflow horizontal */
-            overflow-x: hidden;
-        }
+        .text-container { width: 100%; max-width: 600px; }
 
-        .content-body::-webkit-scrollbar { width: 5px; }
-        .content-body::-webkit-scrollbar-track { background: transparent; }
+        .content-body::-webkit-scrollbar { width: 4px; }
         .content-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
 
-        /* Animation Classes */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1s ease-out;
-        }
-
-        .stagger-text {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 1s ease-out;
-        }
-
-        .visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+        .stagger-text { opacity: 0; transform: translateY(10px); transition: all 0.8s ease-out; }
+        .visible { opacity: 1; transform: translateY(0); }
 
         h1 {
-            font-family: 'Playfair Display', serif; font-weight: 600; font-size: 2rem;
-            margin-bottom: 40px; text-align: center; color: #fff;
-            padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.8rem;
+            margin-bottom: 30px; text-align: center; color: #fff;
+            padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);
             line-height: 1.3;
         }
         
@@ -127,97 +134,81 @@
         }
 
         p {
-            font-size: 1.1rem; line-height: 1.9; margin-bottom: 30px;
+            font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px;
             color: #cbd5e1; text-align: justify;
         }
 
         .poetry-section {
             text-align: center; font-family: 'Playfair Display', serif; font-style: italic;
-            margin: 50px 0; padding: 30px;
+            margin: 40px 0; padding: 25px;
             background: rgba(255,255,255,0.03); border-radius: 12px; color: #e0e7ff;
             border: 1px dashed rgba(255,255,255,0.1);
         }
 
         .highlight { color: #a5b4fc; font-weight: bold; }
-        .sad-closing { font-size: 1rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; margin-top: 40px; }
+        .sad-closing { font-size: 0.95rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; margin-top: 30px; }
 
-        .final-words { margin: 60px 0 40px 0; text-align: center; }
+        .final-words { margin: 50px 0 30px 0; text-align: center; }
         .final-words span {
-            display: block; font-family: 'Playfair Display', serif; font-size: 1.4rem;
-            color: #fff; margin-bottom: 10px;
+            display: block; font-family: 'Playfair Display', serif; font-size: 1.3rem;
+            color: #fff; margin-bottom: 8px;
         }
 
-        /* --- STYLE COPYRIGHT DIPERBAIKI --- */
         .footer-wrapper {
-            text-align: center; 
-            border-top: 1px solid rgba(255,255,255,0.05); 
-            padding-top: 30px;
-            margin-bottom: 20px; /* Tambah margin bawah sedikit */
-            
-            /* Animasi muncul */
-            opacity: 0;
-            animation: footerAppear 1s ease forwards;
-            /* Delay disesuaikan agar tidak muncul terlalu cepat sebelum user scroll */
-            animation-delay: 4s; 
+            text-align: center; border-top: 1px solid rgba(255,255,255,0.05); 
+            padding-top: 20px; margin-bottom: 10px;
+            opacity: 0; animation: footerAppear 1s ease forwards; animation-delay: 3s; 
         }
         
-        @keyframes footerAppear {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes footerAppear { to { opacity: 1; } }
 
-        .mood-text { font-size: 0.8rem; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
-        
-        .copyright { font-size: 0.75rem; opacity: 0.7; letter-spacing: 1px; line-height: 1.5; }
-        
+        .mood-text { font-size: 0.75rem; opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+        .copyright { font-size: 0.75rem; opacity: 0.8; letter-spacing: 0.5px; }
         .copyright a {
-            color: #a5b4fc; /* Warna dibuat lebih terang agar terlihat link */
-            text-decoration: none;
-            border-bottom: 1px dotted rgba(165, 180, 252, 0.5);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 20;
-            padding-bottom: 2px;
+            color: #a5b4fc; text-decoration: none; font-weight: 600;
+            border-bottom: 1px dotted rgba(165, 180, 252, 0.5); transition: all 0.3s ease;
         }
-        .copyright a:hover {
-            text-shadow: 0 0 8px rgba(165, 180, 252, 0.6);
-            border-bottom: 1px solid #a5b4fc; opacity: 1;
-        }
+        .copyright a:hover { border-bottom: 1px solid #a5b4fc; text-shadow: 0 0 5px rgba(165,180,252,0.5); }
 
         @media (max-width: 768px) {
-            .window-header { justify-content: space-between; padding: 0 15px; }
+            .window-header { justify-content: space-between; }
             .desktop-controls, .app-title { display: none; }
-            .mobile-status-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; }
-            
-            /* Padding disesuaikan untuk HP */
-            .content-body { padding: 20px 20px 180px 20px; }
-            
-            h1 { font-size: 1.5rem; text-align: left; border-bottom: none; margin-bottom: 20px; }
+            .mobile-status-bar { display: flex; width: 100%; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7); font-size: 0.8rem; }
+            .content-body { padding: 15px 20px 80px 20px; }
+            h1 { font-size: 1.6rem; text-align: left; border-bottom: none; margin-bottom: 20px; }
             p { font-size: 1rem; text-align: left; }
-            .poetry-section { padding: 20px 0; background: transparent; border: none; font-size: 1.1rem; }
-            .final-words span { font-size: 1.2rem; }
+            .poetry-section { padding: 20px 10px; background: transparent; border: none; font-size: 1.1rem; margin: 20px 0; }
         }
     </style>
 </head>
 <body>
 
+    <div id="overlay">
+        <div class="mail-icon"><i class="fas fa-envelope-open-text"></i></div>
+        <button class="btn-open" onclick="startExperience()">Open</button>
+        <div style="margin-top: 15px; color: rgba(255,255,255,0.5); font-size: 0.8rem;">(Gunakan Headset)</div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://github.com/bobby175/audio/raw/refs/heads/main/v4.www-y2mate.blog%20-%20TULUS%20-%20Jatuh%20Suka%20(Official%20Lyric%20Video)%20(320%20KBps)%20(1)%20(mp3cut.net).mp3" type="audio/mp3">
+    </audio>
+
     <div class="bg-particles"></div>
 
-    <div class="app-container">
+    <div class="app-container" id="appContent">
         
         <div class="window-header">
             <div class="desktop-controls">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
+                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
             </div>
-            
             <div class="app-title">isi_hati.txt</div>
-
             <div class="mobile-status-bar">
                 <span><i class="fas fa-chevron-left"></i> Notes</span>
                 <span id="clock" style="font-weight: 600;">00:00</span>
                 <span><i class="fas fa-signal"></i> &nbsp; <i class="fas fa-battery-three-quarters"></i></span>
+            </div>
+            <div class="music-control" onclick="toggleMusic()">
+                <i class="fas fa-volume-up" id="musicIcon"></i>
             </div>
         </div>
 
@@ -241,7 +232,7 @@
                     akhirnya membuka diri. Sejak itu, hariku tak lagi sama.
                 </p>
 
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" class="fade-in">
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 25px 0;" class="fade-in">
 
                 <p class="fade-in">
                     Entah mengapa, setiap detik mengingatmu terasa seperti puisi yang ditulis tanpa sengaja. 
@@ -294,6 +285,7 @@
     </div>
 
     <script>
+        // Update Jam
         function updateTime() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -304,27 +296,69 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        document.addEventListener("DOMContentLoaded", () => {
+        // LOGIKA UTAMA: Audio & Animasi
+        const bgMusic = document.getElementById('bgMusic');
+        const overlay = document.getElementById('overlay');
+        const appContent = document.getElementById('appContent');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+
+        function startExperience() {
+            // 1. Putar Musik
+            bgMusic.volume = 0.7; // Volume 70%
+            bgMusic.play().then(() => {
+                isPlaying = true;
+            }).catch(error => {
+                console.log("Audio play failed, user interaction needed.");
+            });
+
+            // 2. Hilangkan Overlay
+            overlay.classList.add('hidden');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 1000);
+
+            // 3. Tampilkan Konten Utama
+            appContent.classList.add('show');
+
+            // 4. Jalankan Animasi Text
+            runAnimations();
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('fa-volume-up');
+                musicIcon.classList.add('fa-volume-mute');
+            } else {
+                bgMusic.play();
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-volume-up');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function runAnimations() {
             const fadeElements = document.querySelectorAll('.fade-in');
             const staggerElements = document.querySelectorAll('.stagger-text');
             
-            let delayCounter = 0;
+            let delayCounter = 500; // Mulai delay sedikit setelah klik
             
             fadeElements.forEach((el) => {
                 setTimeout(() => {
                     el.classList.add('visible');
                 }, delayCounter);
-                delayCounter += 900;
+                delayCounter += 800; 
             });
 
             setTimeout(() => {
                 staggerElements.forEach((el, index) => {
                     setTimeout(() => {
                         el.classList.add('visible');
-                    }, index * 800);
+                    }, index * 700);
                 });
-            }, delayCounter + 200);
-        });
+            }, delayCounter + 100);
+        }
     </script>
 </body>
 </html>
