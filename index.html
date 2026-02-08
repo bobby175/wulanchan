@@ -1,368 +1,330 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Gatau Ini apa</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalarifikasi</title>
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-            height: 100vh;
-            height: 100dvh;
-            font-family: 'Lato', sans-serif;
-            color: #e2e8f0;
-            overflow: hidden;
-        }
+<style>
+:root{
+  --bg1:#0f172a;
+  --bg2:#020617;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+  --link:#93c5fd;
+  --border:#334155;
+}
 
-        /* --- Overlay --- */
-        #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #0f172a; z-index: 9999;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            transition: opacity 1s ease-out;
-        }
-        .mail-icon {
-            font-size: 4rem; color: #a5b4fc; margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-        }
-        .btn-open {
-            padding: 12px 30px; border-radius: 50px;
-            background: #a5b4fc; color: #1e1b4b;
-            font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.1rem;
-            border: none; cursor: pointer;
-            box-shadow: 0 0 20px rgba(165, 180, 252, 0.4);
-            transition: transform 0.2s;
-        }
-        .btn-open:active { transform: scale(0.95); }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        .hidden { opacity: 0; pointer-events: none; }
+*{box-sizing:border-box}
 
-        /* --- Background --- */
-        .bg-particles {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(white 1px, transparent 0);
-            background-size: 40px 40px; opacity: 0.1; z-index: 0;
-            animation: moveBackground 60s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes moveBackground {
-            from { background-position: 0 0; }
-            to { background-position: 100px 100px; }
-        }
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top, #1e293b 0%, #020617 70%),
+    linear-gradient(var(--bg1),var(--bg2));
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
 
-        .app-container {
-            position: relative; z-index: 10;
-            width: 100vw; height: 100%;
-            display: flex; flex-direction: column;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(5px);
-            opacity: 0; transition: opacity 1s ease-in;
-        }
-        .app-container.show { opacity: 1; }
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+  opacity:0.15;
+  pointer-events:none;
+}
 
-        .window-header {
-            flex-shrink: 0; height: 50px;
-            background: rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex; align-items: center; justify-content: center;
-            padding: 0 15px; position: relative;
-        }
+.container{
+  max-width:720px;
+  width:100%;
+  animation:fadeIn 1.5s ease forwards;
+}
 
-        .desktop-controls { position: absolute; left: 20px; display: flex; gap: 8px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+h1{
+  font-family:'Playfair Display',serif;
+  font-weight:600;
+  letter-spacing:1px;
+  margin-bottom:28px;
+}
 
-        .app-title {
-            font-family: monospace; font-size: 0.9rem; color: rgba(255,255,255,0.7);
-            letter-spacing: 1px;
-        }
-        .mobile-status-bar { display: none; }
+.inline-link{
+  color:var(--link);
+  text-decoration:none;
+  border-bottom:1px solid rgba(147,197,253,0.4);
+  padding-bottom:2px;
+}
 
-        /* Tombol Musik Desktop (Pojok Kanan Atas Window) */
-        .music-control-desktop {
-            position: absolute; right: 15px; top: 15px;
-            color: rgba(255,255,255,0.5); font-size: 1rem; cursor: pointer;
-            z-index: 20;
-        }
+.letter{
+  font-size:15px;
+  line-height:1.9;
+  white-space:pre-line;
+}
 
-        /* Content Body */
-        .content-body {
-            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
-            padding: 20px 20px 80px 20px;
-            display: flex; justify-content: center;
-        }
-        .text-container { width: 100%; max-width: 600px; }
-        .content-body::-webkit-scrollbar { width: 4px; }
-        .content-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+.signature{
+  margin-top:40px;
+  font-style:italic;
+  color:var(--muted);
+}
 
-        /* Animations */
-        .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
-        .stagger-text { opacity: 0; transform: translateY(10px); transition: all 0.8s ease-out; }
-        .visible { opacity: 1; transform: translateY(0); }
+.footer{
+  margin-top:60px;
+  text-align:center;
+  font-size:12px;
+  color:#64748b;
+}
 
-        h1 {
-            font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.8rem;
-            margin-bottom: 30px; text-align: center; color: #fff;
-            padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);
-            line-height: 1.3;
-        }
-        .subtitle-header {
-            display: block; font-size: 0.6em; font-weight: 400; font-style: italic;
-            color: #cbd5e1; margin-top: 5px;
-        }
-        p {
-            font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px;
-            color: #cbd5e1; text-align: justify;
-        }
-        .poetry-section {
-            text-align: center; font-family: 'Playfair Display', serif; font-style: italic;
-            margin: 40px 0; padding: 25px;
-            background: rgba(255,255,255,0.03); border-radius: 12px; color: #e0e7ff;
-            border: 1px dashed rgba(255,255,255,0.1);
-        }
-        .highlight { color: #a5b4fc; font-weight: bold; }
-        .sad-closing { font-size: 0.95rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; margin-top: 30px; }
-        .final-words { margin: 50px 0 30px 0; text-align: center; }
-        .final-words span {
-            display: block; font-family: 'Playfair Display', serif; font-size: 1.3rem;
-            color: #fff; margin-bottom: 8px;
-        }
+/* FORM PESAN */
+.message-box{
+  margin-top:50px;
+  padding:22px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:rgba(15,23,42,.6);
+}
 
-        /* Footer */
-        .footer-wrapper {
-            text-align: center; border-top: 1px solid rgba(255,255,255,0.05); 
-            padding-top: 20px; margin-bottom: 10px;
-            opacity: 0; animation: footerAppear 1s ease forwards; animation-delay: 3s; 
-        }
-        @keyframes footerAppear { to { opacity: 1; } }
-        .mood-text { font-size: 0.75rem; opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-        .copyright { font-size: 0.75rem; opacity: 0.8; letter-spacing: 0.5px; }
-        .copyright a {
-            color: #a5b4fc; text-decoration: none; font-weight: 600;
-            border-bottom: 1px dotted rgba(165, 180, 252, 0.5); transition: all 0.3s ease;
-        }
-        .copyright a:hover { border-bottom: 1px solid #a5b4fc; text-shadow: 0 0 5px rgba(165,180,252,0.5); }
+.message-box h2{
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  margin-bottom:12px;
+}
 
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .window-header { justify-content: space-between; }
-            .desktop-controls, .app-title, .music-control-desktop { display: none; } /* Sembunyikan kontrol desktop di HP */
-            
-            /* Tampilan Status Bar HP */
-            .mobile-status-bar { 
-                display: flex; width: 100%; justify-content: space-between; align-items: center; 
-                color: rgba(255,255,255,0.7); font-size: 0.8rem; 
-            }
-            
-            .content-body { padding: 15px 20px 80px 20px; }
-            h1 { font-size: 1.6rem; text-align: left; border-bottom: none; margin-bottom: 20px; }
-            p { font-size: 1rem; text-align: left; }
-            .poetry-section { padding: 20px 10px; background: transparent; border: none; font-size: 1.1rem; margin: 20px 0; }
-        }
-    </style>
+textarea{
+  width:100%;
+  min-height:120px;
+  background:rgba(2,6,23,.8);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:14px;
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  resize:none;
+}
+
+textarea::placeholder{color:#64748b}
+
+button{
+  margin-top:14px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  color:#020617;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.status{
+  margin-top:10px;
+  font-size:13px;
+  color:var(--muted);
+  text-align:center;
+}
+
+/* MUSIC BUTTON */
+.music-btn{
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:none;
+  background:rgba(30,41,59,.85);
+  color:#e5e7eb;
+  font-size:18px;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  z-index:10;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
 </head>
+
 <body>
 
-    <div id="overlay">
-        <div class="mail-icon"><i class="fas fa-envelope-open-text"></i></div>
-        <button class="btn-open" onclick="startExperience()">Open</button>
-        <div style="margin-top: 15px; color: rgba(255,255,255,0.5); font-size: 0.8rem;">(Gunakan Headset)</div>
-    </div>
+<!-- BACKSOUND -->
+<audio id="backsound" loop>
+  <source src="https://github.com/bobby175/audio/raw/refs/heads/main/v4.www-y2mate.blog%20-%20TULUS%20-%20Jatuh%20Suka%20(Official%20Lyric%20Video)%20(320%20KBps)%20(1)%20(mp3cut.net).mp3" type="audio/mpeg">
+</audio>
 
-    <audio id="bgMusic" loop>
-        <source src="https://github.com/bobby175/audio/raw/refs/heads/main/v4.www-y2mate.blog%20-%20TULUS%20-%20Jatuh%20Suka%20(Official%20Lyric%20Video)%20(320%20KBps)%20(1)%20(mp3cut.net).mp3" type="audio/mp3">
-    </audio>
+<button class="music-btn" id="musicBtn">▶</button>
 
-    <div class="bg-particles"></div>
+<div class="container">
+<h1>Klarifikasi</h1>
 
-    <div class="app-container" id="appContent">
-        
-        <div class="window-header">
-            <div class="desktop-controls">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-            </div>
-            <div class="app-title">isi_hati.txt</div>
-            <div class="music-control-desktop" onclick="toggleMusic()">
-                <i class="fas fa-volume-up" class="musicIconDisplay"></i>
-            </div>
+<div class="letter">
+Hai aku sudah <a class="inline-link" href="https://bobby175.github.io/pesan/" target="_blank">baca pesan</a> yang wulan kirim saat itu.
 
-            <div class="mobile-status-bar">
-                <span><i class="fas fa-chevron-left"></i> Notes</span>
-                
-                <span id="clock" style="font-weight: 600;">00:00</span>
-                
-                <span style="display: flex; align-items: center;">
-                    <i class="fas fa-volume-up musicIconDisplay" onclick="toggleMusic()" style="margin-right: 15px; cursor: pointer; color: #a5b4fc;"></i>
-                    
-                    <i class="fas fa-signal"></i> &nbsp; <i class="fas fa-battery-three-quarters"></i>
-                </span>
-            </div>
-        </div>
+Karena aku uda ngerasa wulan uda mulai menghindar dari komunikasi sosmed / ajakan mabar, jadinya aku ngeberaniin buat decode isi pesannya, dan yaps, aku ga nyangka ternyata wulan menanggapinya dengan serius (sepertinya).
 
-        <div class="content-body">
-            <div class="text-container">
-                
-                <h1 class="fade-in">
-                    Diam-diam, aku mengagumimu<br>
-                    <span class="subtitle-header">dengan cara paling sunyi.</span>
-                </h1>
+Aku awalnya ga ingin buat jatuh suka ke wulan.
+Awalnya juga ga mau nge DM, eh tapi tiba-tiba kok masuk list close friend (kok bisa masuk CF padahal belum pernah komunikasi sama sekali 😭).
 
-                <p class="fade-in">
-                    Hanya menatapmu, tapi hatiku jatuh berkali-kali. 
-                    Aku tak pandai mengungkap. Tak berani mendekat. 
-                    Tapi selalu ada desir harap yang pelan-pelan menyusup setiap malam, 
-                    bernama: <em>semoga kelak perasaan ini kamu tahu.</em>
-                </p>
+Dari situ aku mencoba ngeberaniin buat nge-DM duluan dengan berharap bisa deket atau sekedar jadi teman beneran.
+(Wulan adalah cewe pertama yang berani ku DM duluan, thanks sudah ngasih pengalaman baik).
 
-                <p class="fade-in">
-                    Saat aku melihatmu untuk pertama kali, aku merasa seperti langit yang lama mendung 
-                    akhirnya membuka diri. Sejak itu, hariku tak lagi sama.
-                </p>
+Tapi aku selalu kehalang buat beneran deket di real life.
+Ingin ngobrol selalu keduluan temen-temen comblangin.
 
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 25px 0;" class="fade-in">
+Wulan pernah bilang takut rame di pabrik, dan yaps aku ga ngapa-ngapain tiba-tiba rame tentang penjomplangan kita.
+Karena aku tipikal yang banyak introvertnya, jadi aku berusaha agar tidak dilihat orang lain saat kita deket.
 
-                <p class="fade-in">
-                    Entah mengapa, setiap detik mengingatmu terasa seperti puisi yang ditulis tanpa sengaja. 
-                    Dari tatapmu yang malu-malu, sapaan yang pelan, hingga percakapan yang begitu sederhana 
-                    tapi membekas sangat dalam. 
-                </p>
+Aku denger ada yang sampe nanya aku siapanya wulan ke mas Edo.
+Dan aku inget kalau wulan punya temen deket di pabrik mungkin dia yang tanya, dari situ aku mulai cari tau siapa dia.
 
-                <p class="fade-in">
-                    Setiap sapaan darimu selalu terasa lebih hangat dari sinar matahari yang menyelinap 
-                    ke balik tirai jendela pagi. Bukan karena kata-katanya manis, tapi karena <span class="highlight">kamu yang menuliskannya</span>.
-                </p>
+Mungkin setelah lebaran, aku ga sengaja nemuin akun TikTok yang follower & followingnya cuma wulan.
+Aku cari IG-nya, dan yaps dia bikin SG sambil tag akun wulan, kayaknya lagi nitip keychain FM.(Maaf Pernah jadi stalkernya wulan :v)
 
-                <div class="fade-in poetry-section">
-                    Dan sungguh,<br>
-                    aku tidak sedang jatuh cinta<br>
-                    pada indahnya kata-kata.<br><br>
-                    Aku jatuh cinta..<br>
-                    pada siapa yang merangkainya,<br>
-                    pada hati yang menghidupkan<br>
-                    setiap kalimatnya.<br><br>
-                    Aku jatuh cinta<br>
-                    pada seseorang<br>
-                    di balik semua tulisan itu,<br>
-                    <span style="font-size: 1.3em; color: #fff; font-weight: bold;">kamu.</span>
-                </div>
+Makanya waktu itu aku bela-belain nonton bareng temen di MJK buat dapetin keychain Giyu dari temen nonton :v
+jangan terharu ya , dulu saking pinginnya jadi teman dekat itu, eh malah jadi bahan ceng-cengan juga,karena ngasihnya di traffic light.
 
-                <p class="fade-in sad-closing">
-                    Jika nanti kita tak berjumpa, tak apa. <br>
-                    Setidaknya aku pernah punya cerita yang kusimpan sendirian, 
-                    tapi kutulis seolah kau pernah membacanya.
-                </p>
+Terus kalau ga salah juga wulan sama dia bikin SG foto nonton dengan grid yang tata letaknya sama, ada satu foto yang sama.
+Mungkinkah wulan sebenernya nobar sama dia? Bukan sama mama?
 
-                <div class="final-words">
-                    <span class="stagger-text">A-ku mulai</span>
-                    <span class="stagger-text">menyukai</span>
-                    <span class="stagger-text">segala hal</span>
-                    <span class="stagger-text" style="color: #a5b4fc; font-weight: bold;">yang ada kamunya.</span>
-                </div>
+Dari situ aku mulai pengen tau dia siapanya wulan.
+Aku kepikiran buat main ML lagi, dan pas udah berteman aku cari akunnya ternyata udah jadi partner.
 
-                <div class="footer-wrapper">
-                    <div class="mood-text">&mdash; Sebuah Perasaan &mdash;</div>
-                    <div class="copyright">
-                        Copyright © 2024 by 
-                        <a href="https://www.instagram.com/iik.hlas?igsh=NWZwY2dwcTV6N28=" target="_blank">Ikhlas</a>
-                    </div>
-                </div>
+Kebetulan dia lagi ga main ML, dan wulan ngajak mabar.
+Dan jujur, mabar sambil ngobrol sama wulan itu seru… malah jadi suka :v
+(maaf ya, aku sudah berusaha bikin rasa sukanya hilang kok).
 
-            </div>
-        </div>
-    </div>
+Tanpa dicari, wulan sering nyebut namanya.
+Wulan bilang temen deket tapi bukan kayak temen(HTS YA?).
+Sering liat Dia ngasih sesuatu dan nungguin wulan di depan loker cewe
+Dan ternyata emang sering call juga.
 
-    <script>
-        // Update Jam
-        function updateTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const clock = document.getElementById('clock');
-            if(clock) clock.innerText = `${hours}:${minutes}`;
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
+Dari situ aku mulai tau…
+ternyata wulan itu nggak jomblo.
+Udah punya crush / someone yang orang lain nggak tau.
 
-        // LOGIKA UTAMA: Audio & Animasi
-        const bgMusic = document.getElementById('bgMusic');
-        const overlay = document.getElementById('overlay');
-        const appContent = document.getElementById('appContent');
-        
-        // Ambil semua icon musik (baik di desktop maupun di mobile status bar)
-        const musicIcons = document.querySelectorAll('.musicIconDisplay');
-        
-        let isPlaying = false;
+Mulai dari situ, kalau ada temen yang masih ngejomplangin, selalu ku jawab:
+“Wulan udah punya seseorang.”
+tetapi temen" masih gapeduli
+(ku harap wulan sendiri yg bilang ketika ada temen yg nyebut namaku di obrolan wulan)
 
-        function startExperience() {
-            bgMusic.volume = 0.7;
-            bgMusic.play().then(() => {
-                isPlaying = true;
-            }).catch(error => {
-                console.log("Audio play failed, user interaction needed.");
-            });
+Dari situ aku mulai ngerasa…
+kenapa aku cemburu,
+kenapa aku kecewa sama diri sendiri,
+kenapa rasanya sakit kalau wulan ngegame tapi aku uda ga diajak mabar:v .
 
-            overlay.classList.add('hidden');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 1000);
+Mungkin ini yang dinamakan jatuh suka.
+Your is my first crush.
+Jadi mohon maaf kalau aku lebay,bikin risih dan bikin ilfil karena aku ga punya pengalaman berteman dengan cewe :v
 
-            appContent.classList.add('show');
-            runAnimations();
-        }
+Oh iya, satu lagi…
+Karena tujuanku sudah terpenuhi buat nyari tau temen deketnya wulan,
+tolong kalau sempet unfollow akun ML-ku dan putus koneksi Roblox-nya ya.
+biar aku ga berharap bisa mabar lagi.
+Dan aku ga ingin nganggep wulan jahat karena gapernah ngajak mabar lagi.
 
-        function toggleMusic() {
-            if (isPlaying) {
-                bgMusic.pause();
-                // Ubah semua icon jadi mute
-                musicIcons.forEach(icon => {
-                    icon.classList.remove('fa-volume-up');
-                    icon.classList.add('fa-volume-mute');
-                    icon.style.opacity = "0.5";
-                });
-            } else {
-                bgMusic.play();
-                // Ubah semua icon jadi on
-                musicIcons.forEach(icon => {
-                    icon.classList.remove('fa-volume-mute');
-                    icon.classList.add('fa-volume-up');
-                    icon.style.opacity = "1";
-                });
-            }
-            isPlaying = !isPlaying;
-        }
+Mungkin komunikasi kita di sosmed sampai di sini.
+tetapi kalau wulan masih mau ngirim reals ig tetep aku lihat dan balas seperlunya, aku tidak ingin mengganggu lagi :)
+Di real life aku harap seperti biasanya,
+seperti kita tidak pernah komunikasi di sosmed.
 
-        function runAnimations() {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            const staggerElements = document.querySelectorAll('.stagger-text');
-            let delayCounter = 500;
-            
-            fadeElements.forEach((el) => {
-                setTimeout(() => {
-                    el.classList.add('visible');
-                }, delayCounter);
-                delayCounter += 800; 
-            });
+Karena di isi pesan wulan ada:
+“kita berjodoh apa engga di masa depan”
+Mungkin kita akan komunikasi lagi ketika kita berjodoh :)
+Tapi aku ga berharap kok.
 
-            setTimeout(() => {
-                staggerElements.forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('visible');
-                    }, index * 700);
-                });
-            }, delayCounter + 100);
-        }
-    </script>
+Yang kuharapkan,
+wulan selalu bahagia, dan di jauhkan dari manusia - manusia yang bikin sakit
+walaupun itu aku :)
+
+see u good people <3
+</div>
+
+<div class="signature">— dari pikiran bodoh yang pernah berharap</div>
+
+<div class="message-box">
+<h2>📌</h2>
+<textarea id="pesanInput" placeholder="Tuliskan di sini jika ada sesuatu yg ingin di sampaikan"></textarea>
+<button onclick="kirimPesan()">Kirim </button>
+<div class="status" id="status"></div>
+</div>
+
+<div class="footer">Ditulis dengan jujur, tanpa maksud menyalahkan siapa pun.</div>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+/* BACKSOUND CONTROL */
+const audio = document.getElementById("backsound");
+const btn = document.getElementById("musicBtn");
+let started = false;
+
+function toggleMusic(){
+  if(audio.paused){
+    audio.play();
+    btn.textContent = "⏸";
+  }else{
+    audio.pause();
+    btn.textContent = "▶";
+  }
+}
+
+btn.addEventListener("click", toggleMusic);
+
+/* AUTO PLAY AFTER FIRST TAP */
+document.addEventListener("click", () => {
+  if(!started){
+    audio.play().then(()=>{
+      btn.textContent="⏸";
+      started=true;
+    }).catch(()=>{});
+  }
+},{once:true});
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyCWS47KfiuFKe-nISBKa8ctrwDt7jJbSTM",
+  authDomain: "note-ad793.firebaseapp.com",
+  databaseURL: "https://note-ad793-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "note-ad793",
+  storageBucket: "note-ad793.firebasestorage.app",
+  messagingSenderId: "932514166408",
+  appId: "1:932514166408:web:bba048952443b58f14113d",
+  measurementId: "G-RZ7C7E74HB"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+function kirimPesan(){
+  const pesan = document.getElementById("pesanInput").value.trim();
+  const status = document.getElementById("status");
+
+  if(!pesan){
+    status.textContent = "Pesan tidak boleh kosong.";
+    return;
+  }
+
+  db.ref("birthday_messages").push({
+    pesan: pesan,
+    timestamp: firebase.database.ServerValue.TIMESTAMP
+  }).then(()=>{
+    status.textContent = "Pesan berhasil dikirim.";
+    document.getElementById("pesanInput").value = "";
+  }).catch(()=>{
+    status.textContent = "Gagal mengirim pesan.";
+  });
+}
+</script>
+
 </body>
 </html>
